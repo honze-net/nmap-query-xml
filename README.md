@@ -90,9 +90,9 @@ $ tree
 
 Now you start your assessment! Want to curl each http host for a `robots.txt` and save it in your project folder?
 ```
-$ nmap-query-xml scanme.xml --service http --pattern "curl -L -o ./{ip}/{protocol}/{port}/robots.txt {service}://{hostname}/robots.txt "
-curl -L -o ./45.33.32.156/tcp/80/robots.txt http://scanme.nmap.org/robots.txt 
-curl -L -o ./45.33.49.119/tcp/80/robots.txt http://scanme2.nmap.org/robots.txt
+$ nmap-query-xml scanme.xml --service http --pattern "curl -L -o ./{ip}/{protocol}/{port}/robots.txt {service}://{hostname}:{port}/robots.txt "
+curl -L -o ./45.33.32.156/tcp/80/robots.txt http://scanme.nmap.org:80/robots.txt 
+curl -L -o ./45.33.49.119/tcp/80/robots.txt http://scanme2.nmap.org:80/robots.txt
 ```
 This will lead to:
 ```
@@ -117,7 +117,7 @@ $ tree
 ```
 You could now examine both robots.txt by hand or use:
 ```
-nmap-query-xml scanme.xml --service http --pattern "file ./{ip}/{protocol}/{port}/robots.txt" | sh
+$ nmap-query-xml scanme.xml --service http --pattern "file ./{ip}/{protocol}/{port}/robots.txt" | sh
 ./45.33.32.156/tcp/80/robots.txt: HTML document, ASCII text
 ./45.33.49.119/tcp/80/robots.txt: ASCII text
 ```
@@ -129,7 +129,7 @@ This concludes this rather simple introduction. I think, you got the point. Feel
 ### Multipe xml files
 If you want to use several xml files in your directory, because of multiple scans, you can call `nmap-query-xml` with each and everyone using `xargs`:
 ```
-ls *.xml
+$ ls *.xml
 1.xml  2.xml  3.xml
 
 $ ls *.xml | xargs -n1 nmap-query-xml
@@ -138,3 +138,10 @@ This is the equivalent of
 ```
 $ nmap-query-xml 1.xml; nmap-query-xml 2.xml; nmap-query-xml 3.xml
 ```
+### Multi-threading
+If your scope contains a large amount of hosts and you want make your approach faster, then use GNU parallel instead of sh as a pipe: `nmap-query-xml your.xml --service http --pattern "yourtool {service}://{hostname}:{port}" | parallel --bar -j8` This will use 8 threads and show a progress bar.
+
+
+
+
+
