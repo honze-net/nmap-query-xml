@@ -2,6 +2,19 @@
 A simple program to query nmap xml files in the terminal.
 ![screenshot 1](https://raw.githubusercontent.com/honze-net/nmap-query-xml/master/screenshot1.png)
 
+## Prerequisites
+You will need Python3 and python-libnmap: https://github.com/savon-noir/python-libnmap#install
+
+## Installation
+```
+# Clone or download to your desired installation folder.
+git clone https://github.com/honze-net/nmap-query-xml
+# Make nmap-query-xml.py executable
+chmod +x nmap-query-xml/nmap-query-xml.py
+# Create a symbolic link in one of your $PATH folders. E. g.
+sudo ln -s $(pwd)/nmap-query-xml/nmap-query-xml.py /usr/bin/nmap-query-xml
+```
+
 ## Introduction
 The easiest usage is to call `nmap-query-xml` just with a xml file as argument. This will list all services and hosts of all open ports like this:
 ```
